@@ -2,6 +2,7 @@ import Link from "next/link";
 import { FormEvent, use, useState } from "react";
 import { useRouter } from "next/router";
 import { signIn } from "next-auth/react";
+import { FaGoogle } from "react-icons/fa";
 
 const LoginView = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -54,6 +55,13 @@ const LoginView = () => {
             {isLoading ? "Loading..." : "Login"}
           </button>
         </form>
+        <div className="">
+          <hr className="mt-5 mb-5" />
+          <button type="button" onClick={() => signIn("google", { callbackUrl, redirect: false })} className="bg-blue-500 text-white w-full p-2 rounded-sm flex justify-center items-center gap-2">
+            <FaGoogle />
+            Login With Google
+          </button>
+        </div>
       </div>
       <p>
         Don{"'"}t have an account? Sign Up <Link href="/auth/register">here</Link>

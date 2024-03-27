@@ -1,17 +1,19 @@
+import { Button } from "@/components/ui/button";
 import { signIn, signOut, useSession } from "next-auth/react";
 
 const Navbar = () => {
   const { data } = useSession();
   return (
-    <div className="px-10 flex justify-end items-center w-full h-20 bg-black text-white fixed">
-      <button
+    <div className="px-10 flex justify-end items-center w-full h-20 fixed shadow-sm">
+      <Button className="mr-4">Register</Button>
+      <Button
         onClick={() => {
-          data ? signOut() : signIn()
+          data ? signOut() : signIn();
         }}
-        className="bg-white border-none rounded-md px-5 py-3 text-black "
+        className=""
       >
         {data ? "Logout" : "Login"}
-      </button>
+      </Button>
     </div>
   );
 };
