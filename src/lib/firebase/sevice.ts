@@ -1,6 +1,5 @@
 import { collection, getDoc, doc, getDocs, getFirestore, query, where, addDoc } from "firebase/firestore";
 import app from "./init";
-import bcrypt from "bcrypt";
 
 const firestore = getFirestore(app);
 
@@ -20,18 +19,8 @@ export async function retrieveDataById(collectionName: string, id: string) {
   return data;
 }
 
-// signUp function
-export async function signUp(
-  userData: {
-    email: string;
-    fullname: string;
-    phone: string;
-    password: string;
-    role?: string;
-  },
-  callback: Function
-) {
-  const q = query(collection(firestore, "user"), where("email", "==", userData.email));
+export async function retrieveDataByField(collectionName: string, field: string, value: string) {
+  const q = query(collection(firestore, collectionName), where(field, "==", value));
 
   const snapshot = await getDocs(q);
   const data = snapshot.docs.map((doc) => ({
@@ -39,57 +28,16 @@ export async function signUp(
     ...doc.data(),
   }));
 
-  // validate data filled in
-  if (data.length > 0) {
-    callback(false);
-  } else {
-    if (!userData.role) {
-      userData.role = "member";
-    }
-    userData.password = await bcrypt.hash(userData.password, 10);
-    await addDoc(collection(firestore, "user"), userData)
-      .then(() => {
-        callback(true);
-      })
-      .catch((error) => {
-        callback(false);
-        console.log(error);
-      });
-  }
+  return data;
 }
 
-// signIn function
-export async function signIn(email: string) {
-  const q = query(collection(firestore, "user"), where("email", "==", email));
-
-  const snapshot = await getDocs(q);
-  const data = snapshot.docs.map((doc) => ({
-    id: doc.id,
-    ...doc.data(),
-  }));
-
-  if (data) {
-    return data[0];
-  } else {
-    return null;
-  }
-}
-
-export async function loginWithGoogle(data: any, callback: Function) {
-  const q = query(collection(firestore, "user"), where("email", "==", data.email));
-
-  const snapshot = await getDocs(q);
-  const user = snapshot.docs.map((doc) => ({
-    id: doc.id,
-    ...doc.data(),
-  }));
-
-  if (user.length > 0) {
-    callback(user[0]);
-  } else {
-    data.role = "member";
-    await addDoc(collection(firestore, "user"), data).then(() => {
-      callback(data);
+export async function addData(collectionName: string, data: any, callback: Function) {
+  await addDoc(collection(firestore, collectionName), data)
+    .then(() => {
+      callback(true);
+    })
+    .catch((error) => {
+      callback(false);
+      console.log(error);
     });
-  }
 }

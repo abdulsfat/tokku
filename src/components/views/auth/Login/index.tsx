@@ -3,6 +3,8 @@ import { FormEvent, use, useState } from "react";
 import { useRouter } from "next/router";
 import { signIn } from "next-auth/react";
 import { FaGoogle } from "react-icons/fa";
+import Input from "@/components/ui/Inputan";
+import Button from "@/components/ui/Button";
 
 const LoginView = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -43,24 +45,16 @@ const LoginView = () => {
       {error && <p className="text-red-600 mb-3">{error}</p>}
       <div className="w-1/3 p-5 shadow-lg mb-5">
         <form onSubmit={handleSubmit}>
-          <div>
-            <label htmlFor="email">Email</label>
-            <input name="email" id="email" type="text" className="mb-2 p-1 w-full bg-slate-200 rounded-sm mt-1 border-none outline-2 outline-slate-500" />
-          </div>
-          <div>
-            <label htmlFor="password">Password</label>
-            <input name="password" id="password" type="password" className="mb-2 p-1 w-full bg-slate-200 rounded-sm mt-1 border-none outline-2 outline-slate-500" />
-          </div>
-          <button type="submit" className="bg-blue-500 text-white w-full p-1 rounded-sm mt-5">
-            {isLoading ? "Loading..." : "Login"}
-          </button>
+          <Input label="Email" name="email" type="email" />
+          <Input label="Password" name="password" type="password" />
+          <Button type="submit">{isLoading ? "Loading..." : "Login"}</Button>
         </form>
         <div className="">
           <hr className="mt-5 mb-5" />
-          <button type="button" onClick={() => signIn("google", { callbackUrl, redirect: false })} className="bg-blue-500 text-white w-full p-2 rounded-sm flex justify-center items-center gap-2">
+          <Button type="button" onClick={() => signIn("google", { callbackUrl, redirect: false })} className="gap-2">
             <FaGoogle />
             Login With Google
-          </button>
+          </Button>
         </div>
       </div>
       <p>

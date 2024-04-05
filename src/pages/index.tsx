@@ -15,7 +15,6 @@ export default function Home() {
   // const {data} = useSession()
   return (
     <main className={cn(` min-h-screen   bg-background font-sans antialiased`, fontSans.variable)}>
-      
       <Navbar />
     </main>
   );

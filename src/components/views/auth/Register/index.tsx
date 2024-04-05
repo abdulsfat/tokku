@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { FormEvent, use, useState } from "react";
 import { useRouter } from "next/router";
+import Input from "@/components/ui/Inputan";
+import Button from "@/components/ui/Button";
 
 const RegisterView = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -9,7 +11,7 @@ const RegisterView = () => {
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setIsLoading(true);
-    setError('');
+    setError("");
     const form = event.target as HTMLFormElement;
     const data = {
       email: form.email.value,
@@ -42,25 +44,12 @@ const RegisterView = () => {
       {error && <p className="text-red-600 mb-3">{error}</p>}
       <div className="w-1/3 p-5 shadow-lg mb-5">
         <form onSubmit={handleSubmit}>
-          <div>
-            <label htmlFor="email">Email</label>
-            <input name="email" id="email" type="text" className="mb-2 p-1 w-full bg-slate-200 rounded-sm mt-1 border-none outline-2 outline-slate-500" />
-          </div>
-          <div>
-            <label htmlFor="fullname">Fullname</label>
-            <input name="fullname" id="fullname" type="text" className="mb-2 p-1 w-full bg-slate-200 rounded-sm mt-1 border-none outline-2 outline-slate-500" />
-          </div>
-          <div>
-            <label htmlFor="phone">Phone Number</label>
-            <input name="phone" id="phone" type="text" className="mb-2 p-1 w-full bg-slate-200 rounded-sm mt-1 border-none outline-2 outline-slate-500" />
-          </div>
-          <div>
-            <label htmlFor="password">Password</label>
-            <input name="password" id="password" type="password" className="mb-2 p-1 w-full bg-slate-200 rounded-sm mt-1 border-none outline-2 outline-slate-500" />
-          </div>
-          <button type="submit" className="bg-blue-500 text-white w-full p-1 rounded-sm mt-5">
-            {isLoading ? "Loading..." : "Register"}
-          </button>
+          <Input label="Email" name="email" type="email" />
+          <Input label="Fullname" name="fullname" type="text" />
+          <Input label="Phone" name="phone" type="number" />
+          <Input label="Password" name="password" type="password" />
+          <Button type="submit">{isLoading ? "Loading..." : "Register"}</Button>
+   
         </form>
       </div>
       <p>
