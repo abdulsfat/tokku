@@ -5,6 +5,7 @@ import { signIn } from "next-auth/react";
 import { FaGoogle } from "react-icons/fa";
 import Input from "@/components/ui/Inputan";
 import Button from "@/components/ui/Button";
+import AuthLayout from "@/components/layouts/AuthLayout";
 
 const LoginView = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -40,27 +41,20 @@ const LoginView = () => {
   };
 
   return (
-    <div className="flex items-center justify-center flex-col h-screen w-screen">
-      <h1 className="font-semibold text-lg  mb-2">LOGIN</h1>
-      {error && <p className="text-red-600 mb-3">{error}</p>}
-      <div className="w-1/3 p-5 shadow-lg mb-5">
-        <form onSubmit={handleSubmit}>
-          <Input label="Email" name="email" type="email" />
-          <Input label="Password" name="password" type="password" />
-          <Button type="submit">{isLoading ? "Loading..." : "Login"}</Button>
-        </form>
-        <div className="">
-          <hr className="mt-5 mb-5" />
-          <Button type="button" onClick={() => signIn("google", { callbackUrl, redirect: false })} className="gap-2">
-            <FaGoogle />
-            Login With Google
-          </Button>
-        </div>
+    <AuthLayout title="Login" link="/auth/register" linktext="Don't have an account? Sign Up">
+      <form onSubmit={handleSubmit}>
+        <Input label="Email" name="email" type="email" />
+        <Input label="Password" name="password" type="password" />
+        <Button type="submit">{isLoading ? "Loading..." : "Login"}</Button>
+      </form>
+      <div className="">
+        <hr className="mt-5 mb-5" />
+        <Button type="button" onClick={() => signIn("google", { callbackUrl, redirect: false })} className="gap-2">
+          <FaGoogle />
+          Login With Google
+        </Button>
       </div>
-      <p>
-        Don{"'"}t have an account? Sign Up <Link href="/auth/register">here</Link>
-      </p>
-    </div>
+    </AuthLayout>
   );
 };
 
