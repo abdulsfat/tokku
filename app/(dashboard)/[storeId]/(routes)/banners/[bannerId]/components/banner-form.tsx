@@ -39,7 +39,7 @@ export const BannerForm: React.FC<BannerFormProps> = ({initialData}) => {
 
     const title = initialData ? "Edit Banner" : "Create Banner"
     const description = initialData ? "Edit Banner Store" : "Create Banner Store"
-    const toastMessage = initialData ? "Successfully create banner" : "Failed to create banner"
+    const toastMessage = initialData ? "Successfully Edit banner" : "Successfully create banner"
     const action = initialData ? "Save Banner" : "Create Banner"
 
     const form = useForm<BannerFormValues>({
@@ -60,6 +60,7 @@ export const BannerForm: React.FC<BannerFormProps> = ({initialData}) => {
                 await axios.post(`/api/${params.storeId}/banners`, data, {})
             }
             router.refresh()
+            router.push(`/${params.storeId}/banners`);
             toast.success(toastMessage)
             } catch (error) {
                 toast.error("Failed to create Banner");
