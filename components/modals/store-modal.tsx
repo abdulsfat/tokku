@@ -34,10 +34,8 @@ export const StoreModal = () => {
 
             const response = await axios.post("/api/stores", values)
 
-            // TODO : build page after user create store
-            // window.location.assign(`/${response.data.id}`)
-
             toast.success("Store stored successfully")
+            window.location.assign(`/${response.data.id}`)
         }catch(e){
             toast.error("Failed create store")
         } finally {
