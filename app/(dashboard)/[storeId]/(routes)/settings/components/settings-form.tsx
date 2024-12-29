@@ -39,22 +39,36 @@ export const SettingsForm: React.FC<SettingsFormProps> = ({initialData}) => {
     })
 
     const onSubmit = async (data: SettingsFormValues) => {
-    try {
-        setLoading(true);
+        try {
+            setLoading(true);
 
-        await axios.patch(`/api/stores/${params.storeId}`, data, {})
-        router.refresh()
-        toast.success("Successfully updated store")
-        } catch (error) {
-            toast.error("Please check data input");
-        } finally {
-        setLoading(false);
+            await axios.patch(`/api/stores/${params.storeId}`, data, {})
+            router.refresh()
+            toast.success("Successfully updated store")
+            } catch (error) {
+                toast.error("Please check data input");
+            } finally {
+            setLoading(false);
+        }
     }
+
+    const onDelete = async () => {
+        try {
+            setLoading(true);
+
+            await axios.delete(`/api/stores/${params.storeId}`)
+            router.refresh()
+            toast.success("Successfully delete store")
+        } catch (error) {
+            toast.error("Failed to delete store");
+        } finally {
+            setLoading(false);
+        }
     }
 
     return(
         <>
-            <AlertModal isOpen={open} onClose={() => setOpen(false)} onConfirm={() => {}} loading={loading}/>
+            <AlertModal isOpen={open} onClose={() => setOpen(false)} onConfirm={onDelete} loading={loading}/>
             <div className="flex items-center justify-between">
                 <Heading
                     title="Settings"
