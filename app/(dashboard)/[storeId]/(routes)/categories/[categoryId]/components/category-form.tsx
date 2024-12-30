@@ -155,7 +155,6 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({initialData, banners}
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
-
                         )}
                         />
                     </div>

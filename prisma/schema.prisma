@@ -21,6 +21,7 @@ model Store {
   updatedAt  DateTime   @updatedAt
   banners    Banner[]   @relation("StoreToBanner")
   categories Category[] @relation("StoreToCategory")
+  products   Product[]  @relation("StoreToProduct")
 }
 
 model Banner {
@@ -38,16 +39,48 @@ model Banner {
 }
 
 model Category {
-  id        String   @id @default(uuid())
+  id        String    @id @default(uuid())
   storeId   String
   bannerId  String
   name      String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  products  Product[] @relation("CategoryToProduct")
 
   store  Store  @relation("StoreToCategory", fields: [storeId], references: [id])
   banner Banner @relation(fields: [bannerId], references: [id])
 
   @@index([storeId])
   @@index([bannerId])
+}
+
+model Product {
+  id         String   @id @default(uuid())
+  storeId    String
+  categoryId String
+  name       String
+  price      Decimal
+  isFeatured Boolean  @default(false)
+  isArchived Boolean  @default(false)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  images     Image[]  @relation("ProductToImage")
+
+  store    Store    @relation("StoreToProduct", fields: [storeId], references: [id])
+  category Category @relation("CategoryToProduct", fields: [categoryId], references: [id])
+
+  @@index([storeId])
+  @@index([categoryId])
+}
+
+model Image {
+  id        String   @unique @default(uuid())
+  productId String
+  url       String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  product Product @relation("ProductToImage", fields: [productId], references: [id], onDelete: Cascade)
+
+  @@index([productId])
 }

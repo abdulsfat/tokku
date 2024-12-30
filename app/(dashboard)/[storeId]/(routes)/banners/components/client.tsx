@@ -1,6 +1,5 @@
 'use client'
 
-import {Banner} from "@prisma/client";
 import {Heading} from "@/components/ui/heading";
 import {Button} from "@/components/ui/button";
 import {Plus} from "lucide-react";
