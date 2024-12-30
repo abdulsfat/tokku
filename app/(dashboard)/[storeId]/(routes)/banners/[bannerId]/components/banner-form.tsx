@@ -59,8 +59,8 @@ export const BannerForm: React.FC<BannerFormProps> = ({initialData}) => {
             } else {
                 await axios.post(`/api/${params.storeId}/banners`, data, {})
             }
-            router.refresh()
             router.push(`/${params.storeId}/banners`);
+            router.refresh()
             toast.success(toastMessage)
             } catch (error) {
                 toast.error("Failed to create Banner");
@@ -74,8 +74,9 @@ export const BannerForm: React.FC<BannerFormProps> = ({initialData}) => {
             setLoading(true);
 
             await axios.delete(`/api/${params.storeId}/banners/${params.bannerId}`)
-            router.refresh()
+            router.push(`/${params.storeId}/banners`)
             toast.success("Successfully delete banner")
+            router.refresh()
         } catch (error) {
             toast.error("Failed to delete banner");
         } finally {
