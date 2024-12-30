@@ -18,7 +18,7 @@ const BannerPage = async ({params}:{params: {storeId:string}}) => {
         {
             id: item.id,
             label: item.label,
-            createdAt: format(item.createdAt, "MM do, yyyy")
+            createdAt: format(item.createdAt, "MMM do, yyyy")
         }
     ))
 

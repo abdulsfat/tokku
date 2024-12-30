@@ -25,3 +25,5 @@ export const columns: ColumnDef<BannerColumn>[] = [
         cell: ({row}) => <CellAction data={row.original}  />,
     },
 ]
+
+
